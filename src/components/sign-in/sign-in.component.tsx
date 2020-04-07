@@ -2,6 +2,8 @@ import React, { Component, FormEvent, ChangeEvent } from 'react';
 
 import './sign-in.styles.scss'
 
+import { signInWithGoogle } from '../../firebase/firebase.utils';
+
 type SignInProps = {};
 type SignInState = {
   email: string;
@@ -23,8 +25,6 @@ class SignIn extends Component<SignInProps, SignInState> {
   handleChange = <T extends keyof SignInState>(event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     const newState = { [name]: value };
-    // TODO make it check at runtime
-
     this.setState(newState as { [P in T]: SignInState[P] });
   }
 
