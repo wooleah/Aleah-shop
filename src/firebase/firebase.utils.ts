@@ -21,6 +21,6 @@ provider.addScope('profile');
 provider.addScope('email');
 // Make user select an account
 provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
