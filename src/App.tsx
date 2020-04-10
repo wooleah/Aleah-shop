@@ -11,7 +11,7 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 type AppProps = {}
 type AppState = {
-  currentUser: firebase.User | null
+  currentUser: any
 }
 
 class App extends Component<AppProps, AppState> {
@@ -23,10 +23,21 @@ class App extends Component<AppProps, AppState> {
 
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-      createUserProfileDocument(user);
-      // this.setState({ currentUser: user });
-
-      console.log(user);
+      if (user) {
+        // User is signed in
+        const userRef = await createUserProfileDocument(user);
+        userRef?.onSnapshot(snapshot => {
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data()
+            }
+          }, () => console.log(this.state))
+        })
+      } else {
+        // User is signed out
+        this.setState({ currentUser: user })
+      }
     })
   }
 
