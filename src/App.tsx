@@ -32,7 +32,7 @@ class App extends Component<AppProps, AppState> {
               id: snapshot.id,
               ...snapshot.data()
             }
-          }, () => console.log(this.state))
+          })
         })
       } else {
         // User is signed out
